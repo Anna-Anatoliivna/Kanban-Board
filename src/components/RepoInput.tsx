@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store"; // Import AppDispatch type
 import { fetchIssues } from "../redux/issuesSlice";
-import { Input, Button, Box, Text, Link } from "@chakra-ui/react";
+import { Input, Button, Box, Text } from "@chakra-ui/react";
 
 const RepoInput: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch instead of default dispatch
   const [repoUrl, setRepoUrl] = useState("");
   const [error, setError] = useState("");
 
   const handleLoadIssues = () => {
-    const regex = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)$/;
+    const regex = /^https:\/\/github\.com\/([^/]+)\/([^/]+)$/;
     const match = repoUrl.match(regex);
 
     if (match) {
-      const [, owner, repo] = match;
-      dispatch(fetchIssues(repoUrl));
+      dispatch(fetchIssues(repoUrl)); // This will now work
       setError("");
     } else {
       setError("Invalid GitHub repository URL. Use format: https://github.com/owner/repo");
@@ -29,28 +29,11 @@ const RepoInput: React.FC = () => {
         onChange={(e) => setRepoUrl(e.target.value)}
         mb={2}
       />
-      <Button onClick={handleLoadIssues} colorScheme="blue" isFullWidth>
-        Load Issues
-      </Button>
-      {error && <Text color="red.500" mt={2}>{error}</Text>}
+      <Button onClick={handleLoadIssues} colorScheme="blue" width="100%">
+  Load Issues
+</Button>
 
-      {repoUrl && !error && (
-        <Box mt={4}>
-          <Text fontSize="sm">
-            Repo: <Link href={repoUrl} isExternal color="blue.500">{repoUrl}</Link>
-          </Text>
-          <Text fontSize="sm">
-            Owner:{" "}
-            <Link
-              href={`https://github.com/${repoUrl.split("/")[3]}`}
-              isExternal
-              color="blue.500"
-            >
-              {repoUrl.split("/")[3]}
-            </Link>
-          </Text>
-        </Box>
-      )}
+      {error && <Text color="red.500" mt={2}>{error}</Text>}
     </Box>
   );
 };
