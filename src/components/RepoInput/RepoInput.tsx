@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store"; // Import AppDispatch type
-import { fetchIssues } from "../redux/issuesSlice";
+import { AppDispatch } from "../../redux/store"; // Import AppDispatch type
+import { fetchIssues } from "../../redux/issuesSlice";
 import { Input, Button, Box, Text } from "@chakra-ui/react";
 
 const RepoInput: React.FC = () => {

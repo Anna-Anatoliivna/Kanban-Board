@@ -3,8 +3,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { Box, Heading, Flex } from "@chakra-ui/react";
-import RepoInput from "./components/RepoInput";
-import Board from "./components/Board";
+import RepoInput from "./components/RepoInput/RepoInput";
+import Board from "./components/Board/Board";
 
 const App: React.FC = () => {
   const issues = useSelector((state: RootState) => state.issues.issues);
